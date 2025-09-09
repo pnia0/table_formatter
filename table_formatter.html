@@ -10,6 +10,8 @@
     <textarea name="入力" id="input"></textarea>
     <div id="subInput" class="area">
         <button id="clear" class="mini-button">clear</button>
+        <p class="tag">入力時クリア：</p>
+        <input type="checkbox" id="input-clear" class="check">
     </div>
     <div class="tab">入力フォーマット</div>
     <div id="selectorArea" class="area"></div>
@@ -111,6 +113,11 @@
                 let inputArea = document.getElementById("input");
                 let output = spliter(inputArea, template);
                 generator(output);
+                
+                if (document.getElementById("input-clear").checked){
+                    let inputArea = document.getElementById("input");
+                    inputArea.value = "";
+                }
             });
             selectorArea.appendChild(selector);
         }
@@ -142,6 +149,9 @@
         display: flex;
         flex-direction: row;
     }
+    .tag{
+        margin: 5px;
+    }
     .tab{
         width: max-content;
         margin-top: 5px;
@@ -154,6 +164,7 @@
     .area{
         display: flex;
         flex-direction: row;
+        align-items: center;
         padding-left: 15px;
     }
     .button{
@@ -169,6 +180,10 @@
         border-radius: 0.5rem;
         padding: 2.5px 6px;
         font-size: 1rem;
+    }
+    .check{
+        width: 1.2rem;
+        height: 1.2rem;
     }
 </style>
 </html>
