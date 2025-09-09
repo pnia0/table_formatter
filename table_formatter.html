@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>table formatter</title>
+  </head>
+<body>
+    <textarea name="入力" id="input"></textarea>
+    <div id="subInput" class="area">
+        <button id="clear" class="mini-button">clear</button>
+    </div>
+    <div class="tab">入力フォーマット</div>
+    <div id="selectorArea" class="area"></div>
+    <div class="tab">出力フォーマット</div>
+    <div id="outputs" class="area"></div>
+</body>
+<script>
+    /*
+    テンプレートを追加するには：
+    templates配列にフォーマットを追加します。
+        name: 名称
+        color: ボタンの色
+        column: 行を分ける文字列
+        row: 列を分ける文字列
+        header: 出力の先頭につける文字列
+        footer: 出力の末尾につける文字列
+    */
+    const templates = [
+        {
+            name: "latex",
+            color: "skyblue",
+            column: "\\\\\n",
+            row: " & ",
+            header:"",
+            footer:"",
+        },
+        {
+            name: "matlab",
+            color: "orange",
+            column: "; ",
+            row: " ",
+            header:" = [",
+            footer:"];",
+        },
+    ];
+    /*
+        {
+            name: "",
+            color: "",
+            column: "",
+            row: "",
+            header:"",
+            footer:""
+        },
+    */
+
+    function spliter(inputArea, template) {
+        let table = [];
+        console.log(inputArea.value);
+        
+        const rows = inputArea.value.split(template.column);
+
+        for (const row of rows) {
+            const cells = row.split(template.row);
+            table.push(cells);
+        }
+        return table;
+    }
+
+    function generator(table){
+        outputarea = document.getElementById("outputs");
+
+        while(outputarea.firstChild){
+            outputarea.removeChild(outputarea.firstChild);
+        }
+
+        //generate output
+        for (const template of templates) {
+            let outputText = template.header;
+            for (row of table) {
+                for (cell of row) {
+                    outputText += cell;
+                    outputText += template.row;
+                }
+                outputText = outputText.substring(0, outputText.length - template.row.length);
+                outputText += template.column;
+            }
+            outputText = outputText.substring(0, outputText.length - template.column.length);
+            outputText += template.footer;
+
+            let output = document.createElement("button");
+            output.textContent = template.name;
+            output.classList.add("button");
+            output.style.backgroundColor = template.color;
+            output.addEventListener("click", () => {
+                navigator.clipboard.writeText(outputText);
+            });
+            outputarea.appendChild(output);
+        }
+    }
+
+    function selectorSetter(){
+        let selectorArea = document.getElementById("selectorArea");
+        for(const template of templates) {
+            let selector = document.createElement("button");
+            selector.textContent = template.name;
+            selector.classList.add("button");
+            selector.style.backgroundColor = template.color;
+            selector.addEventListener("click", () => {
+                let inputArea = document.getElementById("input");
+                let output = spliter(inputArea, template);
+                generator(output);
+            });
+            selectorArea.appendChild(selector);
+        }
+    }
+
+    selectorSetter();
+    
+    document.getElementById("clear").addEventListener("click", () => {
+        let inputArea = document.getElementById("input");
+        inputArea.value = "";
+    });
+
+</script>
+<style>
+    body{
+        display: flex;
+        flex-direction: column;
+        margin: 10px;
+        padding: 0;
+    }
+    #input{
+        width: auto;
+        height: 8rem;
+        resize: none;
+        border: 1.5px solid gray;
+        border-radius: 0.5rem;
+    }
+    #sub-input{
+        display: flex;
+        flex-direction: row;
+    }
+    .tab{
+        width: max-content;
+        margin-top: 5px;
+        border: 1.5px solid gray;
+        border-radius: 2px 2px 0.5rem;
+        padding: 5px 12px;
+        background-color: #ccc;
+        font-size: 1.2rem;
+    }
+    .area{
+        display: flex;
+        flex-direction: row;
+        padding-left: 15px;
+    }
+    .button{
+        margin: 5px;
+        border: 1.5px solid gray;
+        border-radius: 0.5rem;
+        padding: 5px 12px;
+        font-size: 1.2rem;
+    }
+    .mini-button{
+        margin: 5px;
+        border: 1.5px solid gray;
+        border-radius: 0.5rem;
+        padding: 2.5px 6px;
+        font-size: 1rem;
+    }
+</style>
+</html>
