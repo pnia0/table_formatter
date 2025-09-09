@@ -4,18 +4,21 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <title>table formatter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Epunda+Sans:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <title>table formatter</title>
   </head>
 <body>
-    <textarea name="入力" id="input"></textarea>
+    <textarea name="入力" id="input" class="epunda-sans"></textarea>
     <div id="subInput" class="area">
-        <button id="clear" class="mini-button">clear</button>
-        <p class="tag">入力時クリア：</p>
+        <button id="clear" class="mini-button epunda-sans">clear</button>
+        <p class="tag epunda-sans">入力時クリア：</p>
         <input type="checkbox" id="input-clear" class="check">
     </div>
-    <div class="tab">入力フォーマット</div>
+    <div class="tab epunda-sans">入力フォーマット</div>
     <div id="selectorArea" class="area"></div>
-    <div class="tab">出力フォーマット</div>
+    <div class="tab epunda-sans">出力フォーマット</div>
     <div id="outputs" class="area"></div>
 </body>
 <script>
@@ -94,6 +97,7 @@
             let output = document.createElement("button");
             output.textContent = template.name;
             output.classList.add("button");
+            output.classList.add("epunda-sans");
             output.style.backgroundColor = template.color;
             output.addEventListener("click", () => {
                 navigator.clipboard.writeText(outputText);
@@ -108,6 +112,7 @@
             let selector = document.createElement("button");
             selector.textContent = template.name;
             selector.classList.add("button");
+            selector.classList.add("epunda-sans");
             selector.style.backgroundColor = template.color;
             selector.addEventListener("click", () => {
                 let inputArea = document.getElementById("input");
@@ -184,6 +189,12 @@
     .check{
         width: 1.2rem;
         height: 1.2rem;
+    }
+    .epunda-sans {
+    font-family: "Epunda Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
     }
 </style>
 </html>
