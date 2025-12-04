@@ -31,6 +31,8 @@
     <div id="outputs" class="area"></div>
 </body>
 <script>
+    //初期値
+    const INPUT_CLEAR = true;
     /*
     テンプレートを追加するには：
     templates配列にフォーマットを追加します。
@@ -87,7 +89,6 @@
 
     function spliter(inputArea, template) {
         let table = [];
-        console.log(inputArea.value);
         
         const rows = inputArea.value.split(template.column);
 
@@ -152,7 +153,8 @@
             selectorArea.appendChild(selector);
         }
     }
-
+    
+    document.getElementById("input-clear").checked = INPUT_CLEAR;
     selectorSetter();
     
     document.getElementById("clear").addEventListener("click", () => {
