@@ -16,8 +16,8 @@
         };
       }
     ) // {
-      ManagerModules.table-formatter = import ./nix/hm-module.nix;
-      ManagerModules.default = self.homeManagerModules.table-formatter;
+      homeManagerModules.table-formatter = import ./nix/hm-module.nix;
+      homeManagerModules.default = self.homeManagerModules.table-formatter;
 
     };
 }
