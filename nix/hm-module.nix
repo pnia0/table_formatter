@@ -13,6 +13,6 @@ in
     };
   };
   config = lib.mkIf cfg.enable {
-    home.package = [ cfg.package ];
+    home.packages = [ cfg.package ];
   };
 }
