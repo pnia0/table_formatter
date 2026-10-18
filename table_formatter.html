@@ -152,6 +152,10 @@
             output.style.backgroundColor = template.color;
             output.addEventListener("click", () => {
                 navigator.clipboard.writeText(outputText);
+                output.classList.add("copied");
+                setTimeout(() => {
+                    output.classList.remove("copied");
+                }, 3000);
             });
             outputarea.appendChild(output);
         }
@@ -228,11 +232,22 @@
         padding-left: 15px;
     }
     .button{
+        position: relative;
         margin: 5px;
         border: 1.5px solid gray;
         border-radius: 0.5rem;
         padding: 5px 12px;
         font-size: 1.2rem;
+    }
+    .copied::after {
+        position: absolute;
+        content: "copied!";
+        top: 100%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: max-content;
+        color: gray;
+        font-size: 1rem;
     }
     .mini-button{
         margin: 5px;
